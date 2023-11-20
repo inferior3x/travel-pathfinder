@@ -11,7 +11,40 @@ from selenium.webdriver.support import expected_conditions as EC
 with open('crawler/config/hotel_crawler.json', 'r') as config_file:
     config = json.load(config_file)
 
+# 인원 수와 객실 수 초기화 함수
+def reset_persons_and_rooms(driver):
+    # 인원 수 줄이기 버튼
+    persons_minus_click = driver.find_element(By.CSS_SELECTOR, "body > div.fh-sf-trigger-popup > div > div:nth-child(6) > div.right > div:nth-child(1) > i")
+    persons_count = driver.find_element(By.CSS_SELECTOR, "body > div.fh-sf-trigger-popup > div > div:nth-child(6) > div.right > span").text
+    # 객실 수 줄이기 버튼
+    rooms_minus_click = driver.find_element(By.CSS_SELECTOR, "body > div.fh-sf-trigger-popup > div > div:nth-child(4) > div.right > div:nth-child(1) > i")
+    rooms_count = driver.find_element(By.CSS_SELECTOR, "body > div.fh-sf-trigger-popup > div > div:nth-child(4) > div.right > span").text
+
+    # 현재 설정된 인원 수와 객실 수를 확인하고 기본값으로 초기화
+    current_persons = int(persons_count)
+    current_rooms = int(rooms_count)
+
+    print("current rooms: ",current_rooms)
+    print("current person: ",current_persons)
+
+    # 객실 수 초기화
+    while current_rooms > 1:
+        rooms_minus_click.click()
+        time.sleep(0.2)
+        current_rooms -= 1
+        time.sleep(0.2)
+
+    # 인원 수 초기화
+    while current_persons > 2:
+        persons_minus_click.click()
+        time.sleep(0.2)
+        current_persons -= 1
+        time.sleep(0.2)
+
+
+
 def select_date(driver, current_date, checkin_date, date, is_checkout=False):
+
     # 달력 열기 (체크아웃 날짜 선택 시 이미 열려있는 경우 제외)
     if not is_checkout:
         day_open_btn = driver.find_element(By.CSS_SELECTOR, config["selectors"]["day_open_btn"])
@@ -95,32 +128,38 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
 
     driver.get(config["url"])
 
-    # 출발지 입력
+    # 출발지 항공편 입력
     start_search_btn = WebDriverWait(driver, 1).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, config["selectors"]["start_search_btn"]))
     )
+    time.sleep(0.5)
     start_search_btn.click()
 
-    time.sleep(0.5)
-
+    time.sleep(0.2)
+    start_search_btn.click()
+    time.sleep(0.2)
     start_search = WebDriverWait(driver,1).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, config["selectors"]["start_search_btn"]))
     )
     start_search.clear()
+    time.sleep(0.5)
     start_search.send_keys(start_place)
 
     time.sleep(0.5)
 
-    # 항공편 검색
+    # 도착지 항공편 검색
     flight_search_btn = WebDriverWait(driver, 1).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, config["selectors"]["flight_search_btn"]))
     )
+    time.sleep(1)
     flight_search_btn.click()
-
+    time.sleep(0.5)
     flight_search = WebDriverWait(driver, 1).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, config["selectors"]["flight_search_btn"]))
     )
+    time.sleep(0.5)
     flight_search.clear()
+    time.sleep(0.5)
     flight_search.send_keys(flight_destination)
 
     time.sleep(0.5)
@@ -129,13 +168,15 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
     hotel_search_btn = WebDriverWait(driver, 1).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, config["selectors"]["hotel_search_btn"]))
     )
+    time.sleep(0.5)
     hotel_search_btn.click()
-
+    time.sleep(0.5)
     hotel_search = WebDriverWait(driver, 1).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, config["selectors"]["hotel_search_btn"]))
     )
-
+    time.sleep(0.5)
     hotel_search.clear()
+    time.sleep(0.5)
     hotel_search.send_keys(flight_destination)
     time.sleep(0.6)
 
@@ -150,6 +191,8 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
     persons_and_rooms_btn.click()
 
     time.sleep(0.2)
+    reset_persons_and_rooms(driver)
+    time.sleep(0.3)
     persons_plus_click = driver.find_element(By.CSS_SELECTOR, config["selectors"]["person_plus_btn"])
     persons_minus_click = driver.find_element(By.CSS_SELECTOR, config["selectors"]["person_minus_btn"])
 
