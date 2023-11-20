@@ -1,0 +1,33 @@
+{
+    "url": "https://kr.trip.com/packages/?sourceFrom=IBUBundle_home&locale=ko-KR&curr=KRW",
+    "implicit_wait_time": 15,
+    "selectors": {
+        "start_search_btn":"#from",
+        "hotel_search_btn": "#hotelCity",
+        "flight_search_btn": "#to",
+        "start_flight_info_airline": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(1) > div.f-row-center.mr16 > div > span.c1.fs2.ellipsis",
+        "start_flight_info_start_time": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(1) > div.fli-info > div:nth-child(1) > span.fs5.c1.b.mw50",
+        "start_flight_info_start_airport": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(1) > div.fli-info > div:nth-child(1) > span.fh-trigger.fs2-popover-tirgger.fli-airport",
+        "start_flight_info_end_time": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(1) > div.fli-info > div.column.aie > span.fli-arrival-time.fs5.c1.b.mw60",
+        "start_flight_info_end_airport": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(1) > div.fli-info > div.column.aie > span.fh-trigger.fs2-popover-tirgger.fli-airport",
+        "start_flight_info_time": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(1) > div.fli-info > div.fh-trigger.fs2-popover-tirgger.column.ml8.mr8.aic > span:nth-child(1)",
+        "comeback_flight_info_airline": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(3) > div.f-row-center.mr16 > div > span.c1.fs2.ellipsis",
+        "comeback_flight_info_start_time": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(3) > div.fli-info > div:nth-child(1) > span.fs5.c1.b.mw50",
+        "comeback_flight_info_start_airport": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(3) > div.fli-info > div:nth-child(1) > span.fh-trigger.fs2-popover-tirgger.fli-airport",
+        "comeback_flight_info_end_time": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(3) > div.fli-info > div.column.aie > span.fli-arrival-time.fs5.c1.b.mw60",
+        "comeback_flight_info_end_airport": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(3) > div.fli-info > div.column.aie > span.fh-trigger.fs2-popover-tirgger.fli-airport",
+        "comeback_flight_info_time": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child(3) > div.fli-info > div.fh-trigger.fs2-popover-tirgger.column.ml8.mr8.aic > span:nth-child(1)",
+        "day_open_btn": "#depart",
+        "day_btn": ".day",
+        "month_next_btn": "body > div.c-calendar.fh-bundle-package-calendar > div.c-calendar__body > span.c-calendar-icon-next",
+        "search_btn": "#__next > div.ibu-bundle-container > div.top > div.search-bar > div > div.fh-searchForm-content > div.right > div.ic_button",
+        "hotel_name": "div.hotel-card div.middle-info div.title-info span.title span.b",
+        "price": "div.hotel-card div.right-info div.hotel-price div.real div.fs7",
+        "flight_info_base": "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div.pb12.mt8.ml4.mr4 > div.fli-root.selected-round > div > div:nth-child(1) > div:nth-child({})",
+        "persons_and_rooms_btn": "#__next > div.ibu-bundle-container > div.top > div.search-bar > div > div.fh-searchForm-header > div > div:nth-child(2) > div > div",
+        "rooms_plus_btn": "body > div.fh-sf-trigger-popup > div > div:nth-child(4) > div.right > div:nth-child(3) > i",
+        "person_plus_btn": "body > div.fh-sf-trigger-popup > div > div:nth-child(6) > div.right > div:nth-child(3) > i",
+        "person_minus_btn": "body > div.fh-sf-trigger-popup > div > div:nth-child(6) > div.right > div:nth-child(1) > i"
+    }
+}
+
