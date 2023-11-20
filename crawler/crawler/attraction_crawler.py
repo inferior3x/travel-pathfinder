@@ -1,4 +1,5 @@
 import json
+import random
 import time
 
 from selenium.webdriver.common.keys import Keys
@@ -31,9 +32,14 @@ def find_attraction(driver, place_keyword, number_of_items):
     attractions_data = []
     attractions_blocks = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".location-meta-block"))
-    )[:number_of_items]
+    )[:29]
 
-    for block in attractions_blocks:
+    # 가능한 인덱스 범위 내에서 중복되지 않는 랜덤 인덱스 생성
+    random_indices = random.sample(range(len(attractions_blocks)), min(number_of_items, len(attractions_blocks)))
+
+
+    for index in random_indices:
+        block = attractions_blocks[index]
         name = block.find_element(By.CSS_SELECTOR, ".result-title").text.strip()
         address = block.find_element(By.CSS_SELECTOR, ".address-text").text.strip()
         attractions_data.append({"name": name, "address": address})
