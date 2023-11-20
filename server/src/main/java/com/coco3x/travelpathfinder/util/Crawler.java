@@ -8,7 +8,7 @@ import java.util.List;
 @Component
 public class Crawler {
     private static final String cmd = "python3";
-    private static final String fileName = "crawling_controller.py";
+    private static final String fileName = "crawling_controller1.py";
     private static final String filePath = "/Users/coco3x/development/project/travel-pathfinder/crawler";
     private static final Object obj = new Object();
     private final Process process;
