@@ -37,7 +37,7 @@ public class TravelRestController {
 
     //경로 계산 요청
     @PostMapping("/travel-plan")
-    public TravelPlanRequestDTO sendTravelPlan(@RequestBody @Valid TravelPlanRequestDTO travelPlanRequestDTO){
+    public String sendTravelPlan(@RequestBody @Valid TravelPlanRequestDTO travelPlanRequestDTO){
 //        System.out.println(travelPlanRequestDTO.toString());
 
         //출발지와 도착지를 골랐는지 확인
@@ -67,11 +67,12 @@ public class TravelRestController {
         //비행기, 호텔, 관광지 가져오기
         JSONObject jsonObject = new JSONObject(travelPlanRequestDTO); //명령어로 만들 json 객체 생성
         jsonObject.put("cmd", "plan"); //출발지, 도착지, 가는 날짜/오는 날짜, 사람 수 / 객실 수
-//        System.out.println(jsonObject);
-//        String result = crawler.command(jsonObject.toString());
-//
-//        System.out.println(result);
+        System.out.println(jsonObject);
+        String result = crawler.command(jsonObject.toString());
 
+        System.out.println(result);
+
+        return result;
 
 //        {
         // "success": true
@@ -121,6 +122,6 @@ public class TravelRestController {
 //    ]
 //}
 
-        return travelPlanRequestDTO;
+
     }
 }
