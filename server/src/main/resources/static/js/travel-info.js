@@ -1,5 +1,5 @@
 const departurePlaceSelector = document.querySelector("#departure-place");
-const travelPlaceSelector = document.querySelector("#travel-place");
+const travelPlaceSelector = document.querySelector("#destination");
 const travelInfoFormSelector = document.querySelector("#travel-info-form");
 const travelPlanButtonSelector = document.querySelector("#travel-info-btn");
 
