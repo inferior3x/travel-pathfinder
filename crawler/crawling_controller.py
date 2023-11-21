@@ -17,29 +17,30 @@ def main():
     # options.add_argument("--headless")  
     options.capabilities["browserName"] = "chrome"
     driver = webdriver.Chrome(options=options)
+    driver.maximize_window()
     driver.implicitly_wait(15)
     loop_count = 0  # 루프 카운터
     
 
     while True:
 
-        #명령어 들어올 때까지 기다림
-        line = sys.stdin.readline()
-        if not line:
-            break  # 명령어가 없으면 중단
-
-        #명령어 json 디코딩
-        cmd = json.loads(line)
+        # #명령어 들어올 때까지 기다림
+        # line = sys.stdin.readline()
+        # if not line:
+        #     break  # 명령어가 없으면 중단
+        #
+        # #명령어 json 디코딩
+        # cmd = json.loads(line)
 
         cmd = {
             "cmd": "plan",
             "departurePlace": "서울",
             "destination": "도쿄",
-            "departureDate":"2023-11-21",
-            "returnDate":"2023-11-27",
-            "travelerNumber":"5",
-            "roomNumber":"3",
-            "attractionNumber":"1"
+            "departureDate": "2023-12-20",
+            "returnDate": "2023-12-25",
+            "travelerNumber": "5",
+            "roomNumber": "3",
+            "attractionNumber": "1"
         }
 
 
@@ -56,6 +57,7 @@ def main():
             #호텔/비행기 찾고 관광지 찾아서 각각 result의 속성에 추가
             result.update(find_hotel_and_flight(driver, cmd["departurePlace"], cmd["destination"], cmd["departureDate"], cmd["returnDate"], int(cmd["travelerNumber"]), int(cmd["roomNumber"])))
             result["attractions"] = find_attraction(driver, cmd["destination"], int(cmd["attractionNumber"]))
+
 
             #성공 여부
             result["success"] = True
