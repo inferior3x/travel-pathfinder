@@ -67,60 +67,10 @@ public class TravelRestController {
         //비행기, 호텔, 관광지 가져오기
         JSONObject jsonObject = new JSONObject(travelPlanRequestDTO); //명령어로 만들 json 객체 생성
         jsonObject.put("cmd", "plan"); //출발지, 도착지, 가는 날짜/오는 날짜, 사람 수 / 객실 수
-        System.out.println(jsonObject);
+//        System.out.println(jsonObject);
+
         String result = crawler.command(jsonObject.toString());
-
-        System.out.println(result);
-
         return result;
-
-//        {
-        // "success": true
-//    "hotel": {
-//        "name": "Hotel Metropolitan Tokyo Ikebukuro",
-//        "price": "2,904,760원"
-//    },
-//    "flights": {
-//        "departure": {
-//            "airline": "아시아나항공, JAL 일본항공",
-//            "start_time": "10:40",
-//            "start_airport": "KWJ",
-//            "end_time": "18:35",
-//            "end_airport": "HND T3",
-//            "time_required": "7시간 55분"
-//        },
-//        "return": {
-//            "airline": "JAL 일본항공, 아시아나항공",
-//            "start_time": "07:05",
-//            "start_airport": "HND T1",
-//            "end_time": "16:55",
-//            "end_airport": "KWJ",
-//            "time_required": "9시간 50분"
-//        }
-//    },
-//    "attractions": [
-//        {
-//            "name": "도쿄 디즈니시",
-//            "address": "1-13, Maihama, 우라야쓰, 치바(현), 관동, 일본"
-//        },
-//        {
-//            "name": "도쿄 타워",
-//            "address": "4-2-8, Shibakoen, 미나토, 도쿄, 도쿄도, 관동, 일본"
-//        },
-//        {
-//            "name": "오다이바",
-//            "address": "2-4-8, Daiba, 미나토, 도쿄, 도쿄도, 관동, 일본"
-//        },
-//        {
-//            "name": "에도-도쿄 박물관",
-//            "address": "1-4-1 Yokoami, 스미다, 도쿄, 도쿄도, 관동, 일본"
-//        },
-//        {
-//            "name": "도쿄역",
-//            "address": "1-9-1, Marunouchi, 치요다, 도쿄, 도쿄도, 관동, 일본"
-//        }
-//    ]
-//}
 
 
     }

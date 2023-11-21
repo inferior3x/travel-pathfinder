@@ -5,14 +5,45 @@
     <title>travel-plan</title>
     <th:block th:include="include/head"></th:block>
 
-    <script src="/js/travel-plan.js" defer></script>
+    <script defer src="/js/util/maps.js"></script>
+    <th:block th:include="include/google-maps-api"></th:block>
+
+<!--    <script src="/js/travel-plan.js" defer></script>-->
+
 </head>
 <body>
 <!--        modal-->
-<div th:include="include/modal"></div>
+    <div th:include="include/modal"></div>
 <!--        spinner-->
-<div th:include="include/spinner"></div>
+    <div th:include="include/spinner"></div>
 
+<!--    <button type="button" id="map_button">이동하기</button>-->
+
+    <h1>호텔 정보</h1>
+    <p id="hotel-name"></p>
+    <p id="hotel-price"></p>
+
+    <h1>항공편 정보</h1>
+    <h2>가는 편</h2>
+    <p id="departure-airline"></p>
+    <p id="departure-start-time"></p>
+    <p id="departure-start-airport"></p>
+    <p id="departure-end-time"></p>
+    <p id="departure-end-airport"></p>
+    <p id="departure-time-required"></p>
+
+    <h2>오는 편</h2>
+    <p id="return-airline"></p>
+    <p id="return-start-time"></p>
+    <p id="return-start-airport"></p>
+    <p id="return-end-time"></p>
+    <p id="return-end-airport"></p>
+    <p id="return-time-required"></p>
+
+    <h1>관광 명소</h1>
+    <ul id="attractions"></ul>
+
+    <div id="map" style="height: 600px;"></div>
 
 </body>
 </html>
