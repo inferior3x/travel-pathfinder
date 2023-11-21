@@ -112,12 +112,15 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
 
     # 날짜 유효성 검사
     max_future_date = current_date + timedelta(days=11 * 30)  # 11개월 후
+
     if (checkin_date is None) or (checkout_date is None) or not (current_date <= checkin_date <= max_future_date and checkin_date < checkout_date <= max_future_date):
+        return
         return json.dumps({
             "success": False,
             "error_message": "잘못된 날짜 입력입니다.",
             },
             ensure_ascii=False)
+    
 
     persons_click_time, rooms_click_time = person_and_room(person_number, room_number)
 

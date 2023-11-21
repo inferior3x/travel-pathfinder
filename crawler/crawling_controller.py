@@ -35,25 +35,25 @@ def main():
         #     "cmd": "plan",
         #     "departurePlace": "서울",
         #     "destination": "도쿄",
-        #     "departureDate":"2023-11-21",
-        #     "returnDate":"2023-11-27",
+        #     "departureDate":"2023-12-21",
+        #     "returnDate":"2023-12-25",
         #     "travelerNumber":"5",
         #     "roomNumber":"3",
         #     "attractionNumber":"1"
         # }
         
         #명령어 처리
-        if cmd["cmd"] == "plan":    
+        if cmd["cmd"] == "plan":
             #result 초기화
             result = {}
-
             #호텔/비행기 찾고 관광지 찾아서 각각 result의 속성에 추가
-            result.update(find_hotel_and_flight(driver, cmd["departurePlace"], cmd["destination"], cmd["departureDate"], cmd["returnDate"], int(cmd["travelerNumber"]), int(cmd["roomNumber"])))
-            result["attractions"] = find_attraction(driver, cmd["destination"], int(cmd["attractionNumber"]))
-
-            #성공 여부
-            result["success"] = True
-
+            try:
+                result.update(find_hotel_and_flight(driver, cmd["departurePlace"], cmd["destination"], cmd["departureDate"], cmd["returnDate"], int(cmd["travelerNumber"]), int(cmd["roomNumber"])))
+                result["attractions"] = find_attraction(driver, cmd["destination"], int(cmd["attractionNumber"]))
+                result["success"] = True
+            except:
+                result["success"] = False
+            
             #result to JSON and print
             print(json.dumps(result, ensure_ascii=False))
 
