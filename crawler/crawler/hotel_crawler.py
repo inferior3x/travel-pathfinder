@@ -38,8 +38,6 @@ def reset_persons_and_rooms(driver):
         current_persons -= 1
         time.sleep(0.2)
 
-
-
 def select_date(driver, current_date, checkin_date, date, is_checkout=False):
 
     # 달력 열기 (체크아웃 날짜 선택 시 이미 열려있는 경우 제외)
@@ -183,6 +181,7 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
     hotel_search.send_keys(flight_destination)
     time.sleep(0.6)
 
+
     # 체크인 날짜 선택
     select_date(driver, current_date, checkin_date, checkin_date)
 
@@ -262,12 +261,6 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
     driver.execute_script("window.scrollBy(0, 450);")
     time.sleep(0.5)
 
-    # # 선택된 호텔 카드가 화면에 보이도록 스크롤
-    # driver.execute_script("arguments[0].scrollIntoView(true);", selected_card)
-    #
-    # # 스크롤 이동 후 잠시 대기
-    # time.sleep(1)
-
     # 호텔 카드 클릭 (예: 이름을 클릭하여 상세 페이지로 이동)
 
     name_element = top_hotel_card.find_element(By.CSS_SELECTOR,
@@ -292,8 +285,6 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
             "return": comeback_flight_info
         }
     }
-    print(data)
-    # 쿠키 삭제
-    driver.delete_all_cookies()
+
     # 데이터를 JSON 형식으로 변환 후 출력
     return data

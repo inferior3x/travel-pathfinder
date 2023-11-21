@@ -1,5 +1,6 @@
 import sys
 import json
+import time
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -10,20 +11,19 @@ from crawler.attraction_crawler import find_attraction
 
 
 def main():
-    options = Options()
-    # 창 없이 실행
-    # options.add_argument("--no-sandbox")
-    # options.add_argument("--disable-dev-shm-usage")
-    # options.add_argument("--headless")  
-    options.capabilities["browserName"] = "chrome"
-    driver = webdriver.Chrome(options=options)
-    driver.maximize_window()
-    driver.implicitly_wait(15)
-    loop_count = 0  # 루프 카운터
+
     
 
     while True:
-
+        options = Options()
+        # 창 없이 실행
+        # options.add_argument("--no-sandbox")
+        # options.add_argument("--disable-dev-shm-usage")
+        # options.add_argument("--headless")
+        options.capabilities["browserName"] = "chrome"
+        driver = webdriver.Chrome(options=options)
+        driver.maximize_window()
+        driver.implicitly_wait(15)
         # #명령어 들어올 때까지 기다림
         # line = sys.stdin.readline()
         # if not line:
@@ -61,6 +61,9 @@ def main():
             #result to JSON and print
             print(json.dumps(result, ensure_ascii=False))
 
+            driver.quit()
+
+            time.sleep(1)
             #flush
             sys.stdout.flush()
 
