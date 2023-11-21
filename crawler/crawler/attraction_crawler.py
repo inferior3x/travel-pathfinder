@@ -35,7 +35,7 @@ def find_attraction(driver, place_keyword, number_of_items):
     )[:29]
 
     # 가능한 인덱스 범위 내에서 중복되지 않는 랜덤 인덱스 생성
-    random_indices = random.sample(range(len(attractions_blocks)), min(number_of_items, len(attractions_blocks)))
+    random_indices = random.sample(range(len(attractions_blocks)), min(number_of_items * 2, len(attractions_blocks)))
 
 
     for index in random_indices:
@@ -43,6 +43,8 @@ def find_attraction(driver, place_keyword, number_of_items):
         name = block.find_element(By.CSS_SELECTOR, ".result-title").text.strip()
         address = block.find_element(By.CSS_SELECTOR, ".address-text").text.strip()
         attractions_data.append({"name": name, "address": address})
+
+    driver.delete_all_cookies()
 
     # 결과 출력
     return attractions_data
