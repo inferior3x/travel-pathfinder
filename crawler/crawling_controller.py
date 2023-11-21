@@ -31,7 +31,6 @@ def main():
         #명령어 json 디코딩
         cmd = json.loads(line)
 
-<<<<<<< HEAD
         cmd = {
             "cmd": "plan",
             "departurePlace": "서울",
