@@ -1,78 +1,84 @@
-var map;
+var maps = [];
 
-var lodging = { lat: 35.6273033, lng: 139.7948661 }; //숙소
-//지도 초기화 - 자동 실행
-function initMap() {
+//지도 초기화
+function initMap(i, placeName, center) {
   //지도 초기화(생성)
-  map = new google.maps.Map(document.getElementById("map"), {
+  maps[i] = new google.maps.Map(document.getElementById(`map${i}`), {
     zoom: 15,
-    center: lodging,
+    center: center,
   });
 
   var lodgingMarker = new google.maps.Marker({
-    position: lodging,
-    map: map,
+    position: center,
+    map: maps[i],
     label: {
-      text : "숙소",
+      text : placeName,
       fontWeight: "bold",
       fontSize: "17px",
     },
     zIndex: 999
   });
-
-  var placeMarkerPoint1 = { lat: 48.8606111, lng: 2.337644 };
-  var placeMarker = new google.maps.Marker({
-    position: placeMarkerPoint1,
-    map: map,
-    label: {
-      text : "관광지1",
-      fontWeight: "bold",
-      fontSize: "17px",
-    },
-    icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-    },
-  });
-
-  var placeMarkerPoint2 = { lat: 48.8737917, lng: 2.2950275 };
-  var placeMarker = new google.maps.Marker({
-    position: placeMarkerPoint2,
-    map: map,
-    label: {
-      text : "관광지2",
-      fontWeight: "bold",
-      fontSize: "17px",
-    },
-    icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-
-    },
-  });
-
-  displayRoute(lodging, placeMarkerPoint1);
-  displayRoute(placeMarkerPoint1, placeMarkerPoint2);
-  displayRoute(placeMarkerPoint2, lodging)
-
 }
 
+//맵에 마커 추가
+function markPlaceInMap(i, placeName, place){
+  new google.maps.Marker({
+    position: place,
+    map: maps[i],
+    label: {
+      text : placeName,
+      fontWeight: "bold",
+      fontSize: "17px",
+    },
+    icon: {
+      url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+    },
+  });
+}
+
+async function calculateDistanceMatrix(destinations) {
+  const service = new google.maps.DistanceMatrixService();
+
+  const request = {
+    origins: destinations,
+    destinations: destinations,
+    travelMode: google.maps.TravelMode.DRIVING,
+    unitSystem: google.maps.UnitSystem.METRIC,
+    avoidHighways: false,
+    avoidFerries: false,
+    avoidTolls: false,
+  };
+  const matrix = [];
+
+  const response = await service.getDistanceMatrix(request);
+  // 거리 행렬 결과 처리
+  for (let i = 0; i < destinations.length; i++) {
+    matrix[i] = [];
+    for (let j = 0; j < destinations.length; j++) {
+      matrix[i][j] = response.rows[i].elements[j].duration.value; // 소요 시간 정보
+      // matrix[i][j] = response.rows[i].elements[j].distance.value; // 거리 정보
+      // console.log(`출발지에서 목적지 ${i + 1}까지의 거리: ${distance}, 소요 시간: ${duration}`);
+    }
+  }
 
 
 
+  return matrix;
+}
 
-function displayRoute(origin, destination) {
+function displayRoute(i, origin, destination) {
   var directionsService = new google.maps.DirectionsService();
   var directionsRenderer = new google.maps.DirectionsRenderer({
     suppressMarkers: true // 마커 숨기기
   });
 
-  directionsRenderer.setMap(map);
+  directionsRenderer.setMap(maps[i]);
 
   var request = {
     origin: origin,
     destination: destination,
     travelMode: google.maps.TravelMode.DRIVING, // 차량 이동을 기준
   };
-
   directionsService.route(request, function (result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsRenderer.setDirections(result);
@@ -80,14 +86,13 @@ function displayRoute(origin, destination) {
       // 소요 시간 정보 얻기
       var route = result.routes[0];
       var duration = 0;
-
       for (var i = 0; i < route.legs.length; i++) {
         duration += route.legs[i].duration.value;
       }
-
       // 소요 시간을 분 단위로 변환하고 표시
       var durationInMinutes = Math.ceil(duration / 60);
       console.log("Estimated travel time: " + durationInMinutes + " minutes");
+
     } else {
       console.error("경로를 가져오지 못했습니다: " + status);
     }
@@ -96,31 +101,16 @@ function displayRoute(origin, destination) {
 
 //주소를 위도와 경도로 변환
 function geocodeAddress(address) {
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address: address }, function (results, status) {
-    if (status === "OK") {
-      var location = results[0].geometry.location;
-      var lat = location.lat();
-      var lng = location.lng();
-      console.log("주소: " + address);
-      console.log("위도: " + lat);
-      console.log("경도: " + lng);
-    } else {
-      console.error("지오코딩에 실패했습니다: " + status);
-    }
+  return new Promise((resolve, reject) => {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: address }, function (results, status) {
+      if (status === "OK") {
+        const location = results[0].geometry.location;
+        resolve({lat: location.lat(), lng: location.lng()}); // 성공 시 Promise를 이용해 값을 반환
+      } else {
+        console.log(address, "지오코딩 실패");
+        reject("지오코딩 실패"); // 실패 시 Promise를 이용해 에러를 반환
+      }
+    });
   });
-}
-
-
-
-
-
-
-var button = document.getElementById("map_button");
-button.addEventListener("click", changeCenter);
-function changeCenter() {
-  //설정한 위치로 지도를 다시 이동시킴
-
-  map.panTo(lodging);
-  map.setZoom(15);
 }
