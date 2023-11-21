@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TravelController {
     @GetMapping("/travel-info")
     void goToTravelInfo(){}
+    @GetMapping("/travel-plan")
+    void goToTravelPlan(){}
 }

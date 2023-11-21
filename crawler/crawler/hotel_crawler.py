@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
 # 설정 파일 불러오기
 with open('crawler/config/hotel_crawler.json', 'r') as config_file:
     config = json.load(config_file)
@@ -23,9 +22,6 @@ def reset_persons_and_rooms(driver):
     # 현재 설정된 인원 수와 객실 수를 확인하고 기본값으로 초기화
     current_persons = int(persons_count)
     current_rooms = int(rooms_count)
-
-    print("current rooms: ",current_rooms)
-    print("current person: ",current_persons)
 
     # 객실 수 초기화
     while current_rooms > 1:
@@ -120,8 +116,7 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
         return json.dumps({
             "success": False,
             "error_message": "잘못된 날짜 입력입니다.",
-            }, 
-            indent=4,
+            },
             ensure_ascii=False)
 
     persons_click_time, rooms_click_time = person_and_room(person_number, room_number)

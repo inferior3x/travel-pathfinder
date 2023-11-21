@@ -24,16 +24,14 @@ def main():
     while True:
 
         #명령어 들어올 때까지 기다림
-        # line = sys.stdin.readline()
-        # if not line:
-            # break  # 명령어가 없으면 중단
+        line = sys.stdin.readline()
+        if not line:
+            break  # 명령어가 없으면 중단
 
         #명령어 json 디코딩
-        # cmd = json.loads(line)
-        # print(cmd, "asdf")
-        # sys.stdout.flush()
-        # break
+        cmd = json.loads(line)
 
+<<<<<<< HEAD
         cmd = {
             "cmd": "plan",
             "departurePlace": "서울",
@@ -44,6 +42,7 @@ def main():
             "roomNumber":"3",
             "attractionNumber":"1"
         }
+
 
         #명령어 처리
         if cmd["cmd"] == "plan":    

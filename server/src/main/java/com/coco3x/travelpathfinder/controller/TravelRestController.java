@@ -56,7 +56,7 @@ public class TravelRestController {
             //최소 2박 3일부터 가능합니다.
         }
 
-        //객실과 인원이 숫자이며 1이상 자연수인지 확인하는 로직 추가하기
+        //관광지 개수, 객실과 인원이 숫자이며 1이상 자연수인지 확인하는 로직 추가하기, 관광지는 30개 이하
 
         //객실 개수 <= 인원 확인
         if (Integer.parseInt(travelPlanRequestDTO.getRoomNumber()) >
@@ -67,10 +67,12 @@ public class TravelRestController {
         //비행기, 호텔, 관광지 가져오기
         JSONObject jsonObject = new JSONObject(travelPlanRequestDTO); //명령어로 만들 json 객체 생성
         jsonObject.put("cmd", "plan"); //출발지, 도착지, 가는 날짜/오는 날짜, 사람 수 / 객실 수
-//        System.out.println(jsonObject);
+        System.out.println(jsonObject);
         String result = crawler.command(jsonObject.toString());
 
         System.out.println(result);
+
+        return result;
 
 //        {
         // "success": true
@@ -120,6 +122,6 @@ public class TravelRestController {
 //    ]
 //}
 
-        return "1";
+
     }
 }
