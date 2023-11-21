@@ -1,4 +1,5 @@
 import json
+import random
 import time
 from datetime import datetime, timedelta
 
@@ -111,10 +112,11 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
     checkout_date = create_date(checkout_year, return_month, return_day)
 
     # 날짜 유효성 검사
+    # 날짜 유효성 검사
     max_future_date = current_date + timedelta(days=11 * 30)  # 11개월 후
 
+
     if (checkin_date is None) or (checkout_date is None) or not (current_date <= checkin_date <= max_future_date and checkin_date < checkout_date <= max_future_date):
-        return
         return json.dumps({
             "success": False,
             "error_message": "잘못된 날짜 입력입니다.",
@@ -149,9 +151,12 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
     flight_search_btn = WebDriverWait(driver, 1).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, config["selectors"]["flight_search_btn"]))
     )
-    time.sleep(1)
+    time.sleep(0.5)
     flight_search_btn.click()
     time.sleep(0.5)
+    flight_search_btn.click()
+    time.sleep(0.5)
+
     flight_search = WebDriverWait(driver, 1).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, config["selectors"]["flight_search_btn"]))
     )
@@ -233,8 +238,51 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
 
 
     #랜덤으로 호텔 가져오기
-    x=3
-    hotel = {"name": driver.find_element(By.CSS_SELECTOR, config["selectors"]["hotel_name"].format(x)).text, "price": driver.find_element(By.CSS_SELECTOR, config["selectors"]["price"].format(x)).text}
+
+    # 호텔 카드들을 가져오기
+    hotel_cards = driver.find_elements(By.CLASS_NAME, "hotel-card")
+
+    # 호텔 카드가 없다면, 더 이상 진행하지 않음
+    if not hotel_cards:
+        print("No hotel cards found")
+        raise Exception("No hotel cards found")
+
+    # 맨 위에서부터 3번째 호텔 카드까지만 고려하여 랜덤으로 선택
+    top_hotel_card = hotel_cards[0]  # 처음 세 개의 호텔 카드
+
+    element_location = hotel_cards[2].location
+
+    # 선택된 호텔 카드에서 호텔 이름 추출
+    hotel_name = top_hotel_card.find_element(By.CSS_SELECTOR, ".title-info .title").text
+    hotel_price = top_hotel_card.find_element(By.CSS_SELECTOR, ".hotel-price .real .fs7").text
+
+    time.sleep(0.5)
+    # 선택된 요소의 y 좌표를 사용하여 스크롤
+    # driver.execute_script("window.scrollTo(0, arguments[0]);", element_location['y'])
+    driver.execute_script("window.scrollBy(0, 450);")
+    time.sleep(0.5)
+
+    # # 선택된 호텔 카드가 화면에 보이도록 스크롤
+    # driver.execute_script("arguments[0].scrollIntoView(true);", selected_card)
+    #
+    # # 스크롤 이동 후 잠시 대기
+    # time.sleep(1)
+
+    # 호텔 카드 클릭 (예: 이름을 클릭하여 상세 페이지로 이동)
+
+    name_element = top_hotel_card.find_element(By.CSS_SELECTOR,
+                                               "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div:nth-child(2) > div.infinite-scroll-component__outerdiv > div > div:nth-child(1) > div.middle-info > div.poi > div.title-info > span > span.b.fs4.mr4")
+
+    name_element.click()
+    time.sleep(0.2)
+    hotel_address = driver.find_element(By.CSS_SELECTOR,
+                                        "#jjiHotelDetail > div.rel > div.jj-hotel-info.bg7.mb16 > div.right-info > div:nth-child(2) > span.c3.db.mt5.jjic2 > span").text
+    hotel_close = driver.find_element(By.CSS_SELECTOR,
+                                      "body > div.jji-drawer-root > div > div > div.jji-drawer-header > div.jji-drawer-close.hover-cursor > i")
+    hotel_close.click()
+    time.sleep(0.2)
+
+    hotel = {"name": hotel_name, "price": hotel_price, "address": hotel_address}
 
     # 결과 데이터 구조
     data = {
@@ -244,6 +292,8 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
             "return": comeback_flight_info
         }
     }
-
+    print(data)
+    # 쿠키 삭제
+    driver.delete_all_cookies()
     # 데이터를 JSON 형식으로 변환 후 출력
     return data
