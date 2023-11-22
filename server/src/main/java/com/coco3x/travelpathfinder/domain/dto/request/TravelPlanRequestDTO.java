@@ -12,11 +12,17 @@ import javax.validation.constraints.NotEmpty;
 public class TravelPlanRequestDTO {
     @NotEmpty
     private String departurePlace;
+    @NotEmpty
     private String destination;
+    @NotEmpty
     private String departureDate;
+    @NotEmpty
     private String returnDate;
+    @NotEmpty
     private String travelerNumber;
+    @NotEmpty
     private String roomNumber;
+    @NotEmpty
     private String attractionNumber;
 
     @Override
