@@ -56,12 +56,8 @@ async function calculateDistanceMatrix(destinations) {
     matrix[i] = [];
     for (let j = 0; j < destinations.length; j++) {
       matrix[i][j] = response.rows[i].elements[j].duration.value; // 소요 시간 정보
-      // matrix[i][j] = response.rows[i].elements[j].distance.value; // 거리 정보
-      // console.log(`출발지에서 목적지 ${i + 1}까지의 거리: ${distance}, 소요 시간: ${duration}`);
     }
   }
-
-
 
   return matrix;
 }

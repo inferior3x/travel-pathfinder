@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', async()=>{
             }
 
 
-            destinations.push();// 숙소 첫 번째에 넣기
+            destinations.push(hotel);// 숙소 첫 번째에 넣기
             for(const attraction of responseData.attractions){
                 const destination = await geocodeAddress(attraction.address);
                 if ((Math.abs(destination.lat - hotel.lat) > 3) || (Math.abs(destination.lng - hotel.lng) > 3)) {
@@ -50,7 +50,6 @@ window.addEventListener('DOMContentLoaded', async()=>{
             }
 
             const matrix = await calculateDistanceMatrix(destinations);
-
 
             console.log(responseData.attractions);
             console.log(destinations);
@@ -65,7 +64,8 @@ window.addEventListener('DOMContentLoaded', async()=>{
                 newMapElement.style.height = "600px";
                 document.body.appendChild(newMapElement);
 
-                initMap(i, "숙소", {lat: 35.713428400000012, lng: 139.796664});
+
+                initMap(i, "숙소", hotel);
                 let pre = 0;
                 for(let j = 1; j < route.length ; j++) {
                     displayRoute(i, destinations[pre], destinations[route[j]]);
