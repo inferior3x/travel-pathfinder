@@ -10,8 +10,6 @@ public class Crawler {
     private static final String cmd = "python3";
     private static final String fileName = "crawling_controller.py";
     private static final String filePath = "/Users/coco3x/development/project/travel-pathfinder/crawler";
-    private static final Object obj = new Object();
-    private final Process process;
     private final BufferedReader br;
     private final BufferedWriter bw;
 
@@ -19,12 +17,12 @@ public class Crawler {
         ProcessBuilder pb = new ProcessBuilder(cmd, fileName);
         pb.directory(new File(filePath));
         try {
-            process = pb.start();
+            Process process = pb.start();
+            br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            bw = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        bw = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
     }
 
     public String command(String cmd){
