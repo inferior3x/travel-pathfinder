@@ -32,8 +32,9 @@ public class Crawler {
             bw.newLine();
             bw.flush();
 
-            //결과 리턴
             return br.readLine();
+
+            //결과 리턴
 
         } catch (IOException e) {
             throw new RuntimeException(e);

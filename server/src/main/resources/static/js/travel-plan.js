@@ -8,35 +8,35 @@ window.addEventListener('DOMContentLoaded', async()=>{
                     ()=> {window.location.href = "/travel-info.js";}
                     )
             }
-            document.getElementById("hotel-name").textContent = "호텔 이름: " + responseData.hotel.name;
-            document.getElementById("hotel-price").textContent = "호텔 가격: " + responseData.hotel.price;
-            document.getElementById("hotel-price").textContent = "호텔 주소: " + responseData.hotel.address;
+            document.getElementById("hotel-name").textContent = responseData.hotel.name;
+            // document.getElementById("hotel-price").textContent = "가격: " + responseData.hotel.price;
+            document.getElementById("hotel-address").textContent = responseData.hotel.address;
 
-            document.getElementById("departure-airline").textContent = "항공사: " + responseData.flights.departure.airline;
-            document.getElementById("departure-start-time").textContent = "출발 시간: " + responseData.flights.departure.start_time;
-            document.getElementById("departure-start-airport").textContent = "출발 공항: " + responseData.flights.departure.start_airport;
-            document.getElementById("departure-end-time").textContent = "도착 시간: " + responseData.flights.departure.end_time;
-            document.getElementById("departure-end-airport").textContent = "도착 공항: " + responseData.flights.departure.end_airport;
-            document.getElementById("departure-time-required").textContent = "소요 시간: " + responseData.flights.departure.time_required;
+            document.getElementById("departure-airline").textContent =  responseData.flights.departure.airline;
+            document.getElementById("departure-start-time").textContent =  responseData.flights.departure.start_time;
+            document.getElementById("departure-start-airport").textContent =  responseData.flights.departure.start_airport;
+            document.getElementById("departure-end-time").textContent =  responseData.flights.departure.end_time;
+            document.getElementById("departure-end-airport").textContent =   responseData.flights.departure.end_airport;
+            document.getElementById("departure-time-required").textContent =  responseData.flights.departure.time_required;
 
-            document.getElementById("return-airline").textContent = "항공사: " + responseData.flights["return"].airline;
-            document.getElementById("return-start-time").textContent = "출발 시간: " + responseData.flights["return"].start_time;
-            document.getElementById("return-start-airport").textContent = "출발 공항: " + responseData.flights["return"].start_airport;
-            document.getElementById("return-end-time").textContent = "도착 시간: " + responseData.flights["return"].end_time;
-            document.getElementById("return-end-airport").textContent = "도착 공항: " + responseData.flights["return"].end_airport;
-            document.getElementById("return-time-required").textContent = "소요 시간: " + responseData.flights["return"].time_required;
+            document.getElementById("return-airline").textContent =  responseData.flights["return"].airline;
+            document.getElementById("return-start-time").textContent =  responseData.flights["return"].start_time;
+            document.getElementById("return-start-airport").textContent =  responseData.flights["return"].start_airport;
+            document.getElementById("return-end-time").textContent = responseData.flights["return"].end_time;
+            document.getElementById("return-end-airport").textContent = responseData.flights["return"].end_airport;
+            document.getElementById("return-time-required").textContent = responseData.flights["return"].time_required;
 
             const days = 1;
 
+        //받은 주소를 위도와 경도로 변환
             const destinations = []; //{위도: , 경도: } 배열
             let hotel;
-            if (responseData.hotel !== undefined){
+            if (responseData.hotel !== undefined)
                 hotel = await geocodeAddress(responseData.hotel.address);
-            }else{
+            else
                 hotel = {lat: 35.713428400000012, lng: 139.796664}; //도쿄
-            }
 
-
+        //거리 행렬 구하기 - 관광지 간 이동 시간을 가짐
             destinations.push(hotel);// 숙소 첫 번째에 넣기
             for(const attraction of responseData.attractions){
                 const destination = await geocodeAddress(attraction.address);
@@ -49,6 +49,7 @@ window.addEventListener('DOMContentLoaded', async()=>{
                     break;
             }
 
+        //거리행렬을 최단 경로 알고리즘 함수에 전달하여 최단 경로 반환
             const matrix = await calculateDistanceMatrix(destinations);
 
             console.log(responseData.attractions);
@@ -58,11 +59,12 @@ window.addEventListener('DOMContentLoaded', async()=>{
             const routes = savings_algorithm(days, matrix);
             console.log(routes);
 
+        //얻은 경로를 지도에 띄우기
             for(const [i, route] of routes.entries()){
                 const newMapElement = document.createElement('div');
                 newMapElement.id = `map${i}`;
                 newMapElement.style.height = "600px";
-                document.body.appendChild(newMapElement);
+                document.querySelector("#maps").appendChild(newMapElement);
 
 
                 initMap(i, "숙소", hotel);

@@ -36,6 +36,23 @@ function markPlaceInMap(i, placeName, place){
   });
 }
 
+//주소를 위도와 경도로 변환
+function geocodeAddress(address) {
+  return new Promise((resolve, reject) => {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: address }, function (results, status) {
+      if (status === "OK") {
+        const location = results[0].geometry.location;
+        resolve({lat: location.lat(), lng: location.lng()}); // 성공 시 Promise를 이용해 값을 반환
+      } else {
+        console.log(address, "지오코딩 실패");
+        reject("지오코딩 실패"); // 실패 시 Promise를 이용해 에러를 반환
+      }
+    });
+  });
+}
+
+//목적지들의 위도, 경도를 이용해서 거리 행렬 요청하고 반환
 async function calculateDistanceMatrix(destinations) {
   const service = new google.maps.DistanceMatrixService();
 
@@ -62,6 +79,7 @@ async function calculateDistanceMatrix(destinations) {
   return matrix;
 }
 
+//두 지점 간 경로 계산
 function displayRoute(i, origin, destination) {
   var directionsService = new google.maps.DirectionsService();
   var directionsRenderer = new google.maps.DirectionsRenderer({
@@ -95,18 +113,3 @@ function displayRoute(i, origin, destination) {
   });
 }
 
-//주소를 위도와 경도로 변환
-function geocodeAddress(address) {
-  return new Promise((resolve, reject) => {
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address: address }, function (results, status) {
-      if (status === "OK") {
-        const location = results[0].geometry.location;
-        resolve({lat: location.lat(), lng: location.lng()}); // 성공 시 Promise를 이용해 값을 반환
-      } else {
-        console.log(address, "지오코딩 실패");
-        reject("지오코딩 실패"); // 실패 시 Promise를 이용해 에러를 반환
-      }
-    });
-  });
-}

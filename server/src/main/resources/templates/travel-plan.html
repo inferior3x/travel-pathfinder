@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>travel-plan</title>
     <th:block th:include="include/head"></th:block>
-
+    <link rel="stylesheet" type="text/css" href="/css/travel-plan.css">
     <script defer src="/js/util/maps.js"></script>
     <th:block th:include="include/google-maps-api"></th:block>
     <script src="/js/util/saving_algorithm.js" defer></script>
@@ -20,30 +20,64 @@
 
 <!--    <button type="button" id="map_button">이동하기</button>-->
 
+<ul id="courses-list">
+    <li>
     <h1>호텔 정보</h1>
-    <p id="hotel-name"></p>
-    <p id="hotel-price"></p>
+        <p id="hotel-name">이름</p>
+        <p id="hotel-address">주소</p>
+    </li>
 
-    <h1>항공편 정보</h1>
-    <h2>가는 편</h2>
-    <p id="departure-airline"></p>
-    <p id="departure-start-time"></p>
-    <p id="departure-start-airport"></p>
-    <p id="departure-end-time"></p>
-    <p id="departure-end-airport"></p>
-    <p id="departure-time-required"></p>
+    <li id="courses-list-flight">
+        <h1>항공편 정보</h1>
 
-    <h2>오는 편</h2>
-    <p id="return-airline"></p>
-    <p id="return-start-time"></p>
-    <p id="return-start-airport"></p>
-    <p id="return-end-time"></p>
-    <p id="return-end-airport"></p>
-    <p id="return-time-required"></p>
-
-    <h1>관광 명소</h1>
-    <ul id="attractions"></ul>
-
+        <div class="part">
+            <h2>가는 편</h2>
+            <div id="go-part">
+                <p id="departure-airline" class="alone">항공사</p>
+                <div id="part1">
+                    <p id="departure-start-time">출발 시간</p>
+                    <p id="departure-start-airport">출발 공항</p>
+                </div>
+                <div>
+                    <svg width="200" height="50">
+                        <line x1="30" y1="25" x2="160" y2="25" stroke="grey" stroke-width="5" />
+                        <polygon points="170,25 150,15 150,35" fill="gery" />
+                    </svg>
+                    <p id="departure-time-required">소요 시간</p>
+                </div>
+                <div id="part2">
+                    <p id="departure-end-time">도착 시간</p>
+                    <p id="departure-end-airport">도착 공항</p>
+                </div>
+            </div>
+        </div>
+        <div class="part">
+            <h2>오는 편</h2>
+            <div id="end-part">
+                <p id="return-airline" class="alone">항공사</p>
+                <div id="part3">
+                    <p id="return-start-time">출발 시간</p>
+                    <p id="return-start-airport">출발 공항</p>
+                </div>
+                <div>
+                    <svg width="200" height="50">
+                        <line x1="30" y1="25" x2="160" y2="25" stroke="grey" stroke-width="5" />
+                        <polygon points="170,25 150,15 150,35" fill="gery" />
+                    </svg>
+                    <p id="return-time-required">도착 공항</p>
+                </div>
+                <div id="part4">
+                    <p id="return-end-time">소요 시간</p>
+                    <p id="return-end-airport">도착 시간</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li id="maps">
+        <h1>관광 명소</h1>
+<!--        <ul id="attractions"></ul>-->
+    </li>
+</ul>
 
 
 </body>

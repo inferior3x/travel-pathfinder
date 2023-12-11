@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>travel-info</title>
         <th:block th:include="include/head"></th:block>
-
+        <link rel="stylesheet" type="text/css" href="/css/travel-info.css">
         <script src="/js/travel-info.js" defer></script>
 </head>
 <body>
@@ -14,32 +14,34 @@
     <div th:include="include/spinner"></div>
 
     <form id="travel-info-form" action="/travel-plan" method="get">
+        <div class="dd-field">
 <!--        출발지-->
-        <label for="departure-place">출발지</label>
-        <select id="departure-place" name="departure-place">
+        <label class="dd-field" for="departure-place">출발지</label>
+        <select class="dd-field" id="departure-place" name="departure-place">
             <option>선택</option>
         </select>
 <!--        여행지-->
-        <label for="destination">여행지</label>
-        <select id="destination" name="destination">
+        <label class="dd-field" for="destination">여행지</label>
+        <select class="dd-field" id="destination" name="destination">
             <option>선택</option>
         </select>
+        </div>
 <!--        출발일-->
         <label for="departure-date">출발일</label>
-        <input type="date" id="departure-date" name="departure-date" value="2023-10-10">
+        <input class="travel-info-input" type="date" id="departure-date" name="departure-date" value="2023-12-25">
 <!--        도착일-->
         <label for="return-date">도착일</label>
-        <input type="date" id="return-date" name="return-date" value="2023-10-11">
+        <input class="travel-info-input" type="date" id="return-date" name="return-date" value="2023-12-29">
         <label for="traveler-number">인원</label>
-        <input type="number" id="traveler-number" name="traveler-number" value="1">
+        <input class="travel-info-input" type="number" id="traveler-number" name="traveler-number" value="1">
 <!--        객실 개수-->
         <label for="room-number">객실 개수</label>
-        <input type="number" id="room-number" name="room-number" value="1">
+        <input class="travel-info-input" type="number" id="room-number" name="room-number" value="1">
 <!--        객실 개수-->
         <label for="attraction-number">관광지 개수</label>
-        <input type="number" id="attraction-number" name="attraction-number" value="1">
+        <input class="travel-info-input" type="number" id="attraction-number" name="attraction-number" value="1">
 
-        <button id="travel-info-btn" type="submit">경로 찾기</button>
+        <button id="travel-info-btn" class="spotlight-btn" type="submit">경로 찾기</button>
 
     </form>
 </body>

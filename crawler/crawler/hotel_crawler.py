@@ -285,6 +285,5 @@ def find_hotel_and_flight(driver, start_place, flight_destination, departure_dat
             "return": comeback_flight_info
         }
     }
-
     # 데이터를 JSON 형식으로 변환 후 출력
     return data
