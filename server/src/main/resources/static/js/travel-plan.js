@@ -32,31 +32,49 @@ window.addEventListener('DOMContentLoaded', async()=>{
             const destinations = []; //{위도: , 경도: } 배열
             let hotel;
             if (responseData.hotel !== undefined)
-                hotel = await geocodeAddress(responseData.hotel.address);
+                try {
+                    hotel = await geocodeAddress(responseData.hotel.address);
+                }catch{
+                    console.log("호텔 왜 지오코딩 안돼");
+                }
             else
                 hotel = {lat: 35.713428400000012, lng: 139.796664}; //도쿄
 
         //거리 행렬 구하기 - 관광지 간 이동 시간을 가짐
             destinations.push(hotel);// 숙소 첫 번째에 넣기
             for(const attraction of responseData.attractions){
-                const destination = await geocodeAddress(attraction.address);
-                if ((Math.abs(destination.lat - hotel.lat) > 3) || (Math.abs(destination.lng - hotel.lng) > 3)) {
-                    console.log("유효하지 않은 관광지");
-                    continue;
-                }
-                destinations.push(destination);
-                if (destinations.length === (responseData.attractions.length/2 + 1))
-                    break;
+                    const destination = await geocodeAddress(attraction.address);
+                    if ((Math.abs(destination.lat - hotel.lat) > 3) || (Math.abs(destination.lng - hotel.lng) > 3)) {
+                        console.log("유효하지 않은 관광지");
+                        continue;
+                    }
+                    destinations.push(destination);
+                    if (destinations.length === (responseData.attractions.length/2 + 1))
+                        break;
+
             }
 
         //거리행렬을 최단 경로 알고리즘 함수에 전달하여 최단 경로 반환
             const matrix = await calculateDistanceMatrix(destinations);
 
-            console.log(responseData.attractions);
-            console.log(destinations);
+            // console.log(responseData.attractions);
+            // console.log(destinations);
             console.log(matrix);
+            const bodyDataTSP = {};
+            bodyDataTSP['matrix'] = matrix;
+            bodyDataTSP['n'] = 3;
 
-            const routes = savings_algorithm(days, matrix);
+
+            // const routes = savings_algorithm(days, matrix);
+            let routes;
+            await fetchByPost("/travel-route",
+                bodyDataTSP,
+                async (responseData) => {
+                    routes = responseData
+                },
+                () => {}
+            )
+
             console.log(routes);
 
         //얻은 경로를 지도에 띄우기
